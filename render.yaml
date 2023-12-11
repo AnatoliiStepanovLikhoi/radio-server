@@ -1,0 +1,8 @@
+services:
+  - name: streaming-server
+    env:
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: '/'
+    startCommand: 'node server.js'
+    plan: 'free'
