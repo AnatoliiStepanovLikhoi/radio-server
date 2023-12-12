@@ -7,9 +7,9 @@ const app = express();
 const port = process.env.PORT || 4443;
 
 // Зчитайте сертифікат та приватний ключ
-const privateKey = fs.readFileSync('private-key.pem', 'utf8');
-const certificate = fs.readFileSync('certificate.pem', 'utf8');
-const credentials = { key: privateKey, cert: certificate };
+// const privateKey = fs.readFileSync('private-key.pem', 'utf8');
+// const certificate = fs.readFileSync('certificate.pem', 'utf8');
+// const credentials = { key: privateKey, cert: certificate };
 
 // Створення WebSocket проксі
 const wsProxy = createProxyMiddleware('/borispilfm', {
@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
 });
 
 // Створення HTTPS-сервера
-const httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(app);
 
 // Прослуховування запитів на порту 443
-httpsServer.listen(port, () => {
-  console.log(`Proxy server is running on https://localhost:${port}`);
+httpsServer.listen(port, '0.0.0.0', () => {
+  console.log(`Proxy server is running on https://0.0.0.0:${port}`);
 });
